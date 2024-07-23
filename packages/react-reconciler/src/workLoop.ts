@@ -1,16 +1,35 @@
 import { beginWork } from './beginWork';
 import completeWork from './completeWork';
 import { FiberNode } from './fiber';
+import { HostRoot } from './workTags';
 
-let workInProgress: FiberNode | null = null;
+let workInProgress: FiberNode | null = null; //全局指针指向目标FiberNode
 
 function preapareFreshStack(root: FiberNode, lanes: number) {
 	workInProgress = createWorkInProgress(root, lanes);
 }
 
+export function scheduleUpdateOnFiber(fiber: FiberNode) {
+	//调度功能
+	const root = markUpdateFromFiberToRoot(fiber);
+	renderRoot(root);
+}
+
+function markUpdateFromFiberToRoot(fiber:FiberNode){
+	let node = fiber;
+	let parent = node.return;
+	while(parent!=null){
+		node = parent;
+		parent = node.return;
+	}
+	if(node.tag===HostRoot){
+		return node.stateNode;
+	}
+}
+
 function renderRoot(root: FiberNode) {
 	//初始化
-	preapareFreshStack(root);
+	preapareFreshStack(root); //初始化
 	do {
 		try {
 			workLoop();
@@ -24,7 +43,7 @@ function renderRoot(root: FiberNode) {
 
 function workLoop() {
 	while (workInProgress !== null) {
-		perfornUn;
+		performUnitOfWork;
 	}
 }
 

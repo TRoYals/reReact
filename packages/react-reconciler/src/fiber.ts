@@ -1,5 +1,8 @@
+import { Container } from './hostConfig';
 import { Props, Key } from 'shared/ReactTypes';
 import { WorkTag } from './workTags';
+import { Flags,NoFlags } from './fiberFlags';
+import { Container } from './hostconfig';
 
 export class FiberNode {
 	pendingProps: Props;
@@ -57,4 +60,18 @@ export class FiberNode {
 		// this.childLanes = NoLanes;
 		this.alternate = null;
 	}
+}
+
+
+export class FiberRootNode{
+	container: Container  ;//为什么不设置DomElement？因为其他环境不一点有 
+	current: FiberNode; //当前Fiber树的根节点 即HostRootNode
+	finishedWork: FiberNode | null;//指向最后一个完成的fiberNode , 在完成所有渲染工作时，将最终的 Fiber 树存储在这个属性中。
+	constructor(container:Container,hostRootFiber:FiberNode){
+		this.container = container;
+		this.current  = hostRootFiber;
+		hostRootFiber.stateNode = this;
+		this.finishedWork = null;
+	}
+
 }
