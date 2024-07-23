@@ -8,7 +8,7 @@ export class FiberNode {
 	stateNode: any;
 	type: any;
 	ref: Ref;
-	tag: WorkTag;
+	tag: WorkTag;//tag是FiberNode类的一个属性，用来标识这个FiberNode的类型
 	flags: Flags;
 	subtreeFlags: Flags;
 	deletions: FiberNode[] | null;
