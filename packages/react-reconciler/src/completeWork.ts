@@ -1,9 +1,9 @@
-import { appendInitialChild, createInstance ,createTextInstance} from "hostConfig";
+import { appendInitialChild, Container, createInstance ,createTextInstance} from "hostConfig";
 import { FiberNode } from "./fiber";
 import { WorkTag } from "./workTags";
 import { NoFlags } from "./fiberFlags";
 
-export default completeWork = (wip:FiberNode) => {
+export default function completeWork(wip: FiberNode) {
 	//递归同级元素
 	const newProps = wip.pendingProps;
 	const current = wip.alternate;
@@ -41,7 +41,7 @@ export default completeWork = (wip:FiberNode) => {
     
 };
 
-function appendAllChildren(parent:FiberNode,wip:FiberNode){
+function appendAllChildren(parent:Container,wip:FiberNode){
 	let node = wip.child;
 	while(node!==null){
 		if (node.tag===WorkTag.HostComponent||node.tag===WorkTag.HostText){

@@ -64,7 +64,6 @@ function ChildReconciler(shouldTrackEffects: boolean) {
         return null;
 	};
 }
-const reconcileChildFibers = ChildReconciler(true); //Update流程，追踪副作用
-const mountChildFiberrs = ChildReconciler(false); //Mount流程，不追踪副作用
+export const reconcileChildFibers = ChildReconciler(true); //Update流程，追踪副作用
+export const mountChildFibers = ChildReconciler(false); //Mount流程，不追踪副作用
 
-export { reconcileChildFibers, mountChildFiberrs };
