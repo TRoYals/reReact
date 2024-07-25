@@ -1,15 +1,14 @@
 import { Container } from './hostConfig';
-import { Props, Key } from 'shared/ReactTypes';
-import { WorkTag } from './workTags';
+import { Props, Key, ReactElementType } from 'shared/ReactTypes';
+import { WorkTag, WorkTagType } from './workTags';
 import { Flags,NoFlags } from './fiberFlags';
-import { Container } from './hostconfig';
 
 export class FiberNode {
 	pendingProps: Props;
 	memoizedProps: Props | null;
 	key: Key;
-	stateNode: any;
-	type: any;//stateNode是FiberNode类的一个属性，用于存储与该FiberNode相关联的具体状态对象。这个属性的具体内容取决于FiberNode的类型（即tag的值）
+	stateNode: any;//stateNode是FiberNode类的一个属性，用于存储与该FiberNode相关联的具体状态对象。这个属性的具体内容取决于FiberNode的类型（即tag的值
+	type: any;
 	ref: Ref;
 	tag: WorkTag;//tag是FiberNode类的一个属性，用来标识这个FiberNode的类型
 	flags: Flags;//标记的是浏览器宿主API的一系列操作
@@ -53,7 +52,7 @@ export class FiberNode {
 
 		// 副作用
 		this.flags = NoFlags;
-		this.subtreeFlags = NoFlags;
+		this.subtreeFlags = NoFlags; //子树中包括的Flags
 		this.deletions = null;
 		// 调度
 		this.lanes = NoLane;
@@ -66,7 +65,7 @@ export class FiberNode {
 export class FiberRootNode{
 	container: Container  ;//为什么不设置DomElement？因为其他环境不一点有 
 	current: FiberNode; //当前Fiber树的根节点 即HostRootNode
-	finishedWork: FiberNode | null;//指向最后一个完成的fiberNode , 在完成所有渲染工作时，将最终的 Fiber 树存储在这个属性中。
+	finishedWork: FiberNode | null;//指向最后一个完成的fiberNode
 	constructor(container:Container,hostRootFiber:FiberNode){
 		this.container = container;
 		this.current  = hostRootFiber;
@@ -74,4 +73,41 @@ export class FiberRootNode{
 		this.finishedWork = null;
 	}
 
+}
+
+export const createWorkInProgress = (current:FiberNode,pendingProps:Props):FiberNode=>{
+	let wip= current.alternate;
+	if(wip==null){
+		//mount
+		wip= new FiberNode(current.tag,pendingProps,current.key);
+		wip.type  = current.type;
+		wip.stateNode = current.stateNode;
+		wip.alternate = current;
+		current.alternate = wip;
+	}else{
+		//update
+		wip.pendingProps = pendingProps;
+		wip.flags = NoFlags; 
+		wip.subtreeFlags = NoFlags;
+		wip.deletions = null;
+	}
+	wip.type = current.type;
+	wip.updateQueue = current.updateQueue;
+	wip.child = current.child;
+	wip.memoizedProps = current.memoizedProps;
+	wip.memoizedState = current.memoizedState;
+	return wip;
+}
+
+export function createFiberFromElement(element:ReactElementType):FiberNode{
+	const {type,key,props} = element;
+	let fiberTag:WorkTagType = WorkTag.FunctionComponent;
+	if(typeof type==="string"){
+		fiberTag = WorkTag.HostComponent
+	}else if(typeof type!=="function" && __DEV__){
+		console.warn("未实现的type类型",element);
+	} 
+	const fiber = new FiberNode(fiberTag,props,key);
+	fiber.type = type;
+	return fiber
 }

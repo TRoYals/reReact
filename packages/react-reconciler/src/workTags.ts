@@ -1,16 +1,19 @@
-export type WorkTag =
-	| typeof FunctionComponent
-	| typeof HostRoot
-	| typeof HostComponent
-	| typeof HostText
-	| typeof Fragment;
 
-export const FunctionComponent = 0;
-export const HostRoot = 3;
-export const HostComponent = 5;
-export const HostText = 6;
-export const Fragment = 7;
+enum WorkTag {
+	FunctionComponent = 0,
+	HostRoot = 3,
+	HostComponent = 5,
+	HostText = 6,
+	Fragment = 7
+  }
+export type WorkTagType =
+| WorkTag.FunctionComponent
+| WorkTag.HostRoot
+| WorkTag.HostComponent
+| WorkTag.HostText
+| WorkTag.Fragment;
 
+export { WorkTag };
 // 以下是一些常见的WorkTag类型及其含义：
 
 // FunctionComponent：函数组件。
