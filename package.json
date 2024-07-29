@@ -1,11 +1,12 @@
 {
-	"name": "reReact",
+	"name": "reReact18",
 	"version": "1.0.0",
-	"description": "",
+	"description": "A simple react18 framework",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build:dev": "rollup --bundleConfigAsCjs --config scripts/rollup/dev.config.js"
+		"build:dev": "rollup --bundleConfigAsCjs --config scripts/rollup/dev.config.js",
+		"demo":"vite serve tests/test-fc --config scripts/vite/vite.config.js --force"
 	},
 	"config": {
 		"commitizen": {
@@ -13,7 +14,7 @@
 		}
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Naglfar28",
 	"license": "ISC",
 	"devDependencies": {
 		"@commitlint/config-conventional": "^19.2.2",
@@ -31,6 +32,14 @@
 		"rollup-plugin-generate-package-json": "^3.2.0",
 		"rollup-plugin-typescript2": "^0.36.0",
 		"typescript": "^5.4.5",
-		"typescript-eslint": "^7.9.0"
+		"typescript-eslint": "^7.9.0",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"@typescript-eslint/eslint-plugin": "^7.15.0",
+		"@typescript-eslint/parser": "^7.15.0",
+		"@vitejs/plugin-react": "^4.3.1",
+		"eslint-plugin-react-hooks": "^4.6.2",
+		"eslint-plugin-react-refresh": "^0.4.7",
+		"vite": "^5.3.4"
 	}
 }

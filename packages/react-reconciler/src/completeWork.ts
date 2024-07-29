@@ -31,6 +31,9 @@ export default function completeWork(wip: FiberNode) {
 			}
 			bubbleProperties(wip);
 			return null; 
+		case WorkTag.FunctionComponent:
+			bubbleProperties(wip);
+			return null; 
 		default:
 			if(__DEV__){
 				console.warn("未处理的completeWork情况",wip);

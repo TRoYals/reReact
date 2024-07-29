@@ -109,4 +109,4 @@ function completeUnitOfWork(fiber: FiberNode) {
 		node = node?.return;
 		workInProgress =node;
 	} while (node !== null);
-}
+} 

@@ -5,7 +5,6 @@ const { name,module } = getPackageJSON('react');
 const pkgPath = resolvePkgPath(name);
 const pkgDistPath = resolvePkgPath(name, true);
 
-const basePlugins = getBaseRollupPlugins();
 
 export default [
 	{
@@ -44,6 +43,6 @@ export default [
 				format: 'umd'
 			}
 		],
-		plugins: basePlugins
+		plugins: getBaseRollupPlugins()
 	}
 ];

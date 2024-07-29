@@ -7,7 +7,6 @@ import { scheduleUpdateOnFiber } from './workLoop';
 
 export function createContainer(container:Container){
     const hostRootFiber = new FiberNode(WorkTag.HostRoot,{},null);
-    console.log(hostRootFiber);
     const root = new FiberRootNode(container,hostRootFiber);
     hostRootFiber.updateQueue = createUpdateQueue();    
     return root;

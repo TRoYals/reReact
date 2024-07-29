@@ -3,6 +3,7 @@ import { FiberNode } from "./fiber";
 import { WorkTag} from "./workTags";
 import { mountChildFibers, reconcileChildFibers } from './childFiber';
 import { ReactElementType } from 'shared/ReactTypes';
+import { renderWithHooks } from './fiberHooks';
 
 //递归中的递阶段
 export const beginWork=(wip:FiberNode)=>{
@@ -14,6 +15,8 @@ export const beginWork=(wip:FiberNode)=>{
             return updateHostComponent(wip);
         case WorkTag.HostText:
             return null;
+        case WorkTag.FunctionComponent:
+            return updateFunctionComponent(wip);
         default:
             if(__DEV__){
                 console.warn("未知的tag",wip.tag);
@@ -21,6 +24,12 @@ export const beginWork=(wip:FiberNode)=>{
             break;
     }
     return null;
+}
+
+function updateFunctionComponent(wip:FiberNode){
+    const nextChildren = renderWithHooks(wip);
+    reconcileChildren(wip,nextChildren);
+    return wip.child;
 }
 
 function updateHostRoot(wip:FiberNode){
