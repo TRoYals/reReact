@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 // import './index.css';
 // import App from './App';
@@ -6,9 +7,12 @@ import ReactDOM from 'react-dom/client';
 
 const jsx = <div><span>tset</span></div>;
 const App = ()=>{
+
+  const [num, setNum] = useState(0);
+  
   return (
     <div>
-      <span><Child></Child></span>
+      <span>{num}</span>
     </div>
   )
 }

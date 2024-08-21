@@ -1,6 +1,6 @@
 import { Update } from './fiberFlags';
 import { Action } from './../../shared/ReactTypes';
-
+import { Dispatch } from 'react/src/currentDispatcher';
 export interface Update<State> {
 	action: Action<State>;
 }
@@ -8,8 +8,10 @@ export interface Update<State> {
 export interface UpdateQueue<State>{
 	shared:{
 		pending:Update<State>|null;
-	}
+	};
+	dispatch:Dispatch<Action<State>>;
 }
+
 
 //实例化一个Update
 export const createUpdate = <State>(action:Action<State>):Update<State>=>{

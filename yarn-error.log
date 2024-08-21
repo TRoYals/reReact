@@ -1,0 +1,73 @@
+Arguments: 
+  /Users/fuqixuan/.nvm/versions/node/v18.20.2/bin/node /usr/local/bin/yarn add --dev jest-environment-jsdom
+
+PATH: 
+  /Users/fuqixuan/.pyenv/versions/3.8.12/bin:/Users/fuqixuan/anaconda3/bin:/Users/fuqixuan/.nvm/versions/node/v18.20.2/bin:/Users/fuqixuan/.pyenv/versions/3.8.12/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/usr/local/go/bin:/Users/fuqixuan/.cargo/bin:/Users/fuqixuan/.pyenv/versions/3.8.12/bin:/usr/local/mysql/bin/:/Users/fuqixuan/.local/bin:/opt/homebrew/bin/
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.20.2
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile '/Users/fuqixuan/Library/Caches/Yarn/v6/npm-globals-13.24.0-8432a19d78ce0c1e833949c36adb345400bb1171-integrity/node_modules/globals/license' -> '/Users/fuqixuan/Documents/vscode/reReact/node_modules/@eslint/eslintrc/node_modules/globals/license'
+
+npm manifest: 
+  {
+  	"name": "rereact18",
+  	"version": "1.0.0",
+  	"description": "A simple react18 framework",
+  	"main": "index.js",
+  	"scripts": {
+  		"build:dev": "rollup --bundleConfigAsCjs --config scripts/rollup/dev.config.js",
+  		"demo": "vite serve tests/test-fc --config scripts/vite/vite.config.js --force",
+  		"test": "jest --config scripts/jest/jest.config.js"
+  	},
+  	"config": {
+  		"commitizen": {
+  			"path": "node_modules/cz-git"
+  		}
+  	},
+  	"keywords": [],
+  	"author": "Naglfar28",
+  	"license": "ISC",
+  	"devDependencies": {
+  		"@commitlint/config-conventional": "^19.2.2",
+  		"@eslint/js": "^9.2.0",
+  		"@rollup/plugin-alias": "^5.1.0",
+  		"@rollup/plugin-commonjs": "^25.0.7",
+  		"@rollup/plugin-replace": "^5.0.5",
+  		"@types/react": "^18.3.3",
+  		"@types/react-dom": "^18.3.0",
+  		"@typescript-eslint/eslint-plugin": "^7.15.0",
+  		"@typescript-eslint/parser": "^7.15.0",
+  		"@vitejs/plugin-react": "^4.3.1",
+  		"cz-git": "^1.9.1",
+  		"eslint": "^8.56.0",
+  		"eslint-config-prettier": "^9.1.0",
+  		"eslint-plugin-prettier": "^5.1.3",
+  		"eslint-plugin-react-hooks": "^4.6.2",
+  		"eslint-plugin-react-refresh": "^0.4.7",
+  		"globals": "^15.2.0",
+  		"prettier": "^3.2.5",
+  		"rollup": "^4.17.2",
+  		"rollup-plugin-generate-package-json": "^3.2.0",
+  		"rollup-plugin-typescript2": "^0.36.0",
+  		"typescript": "^5.4.5",
+  		"typescript-eslint": "^7.9.0",
+  		"vite": "^5.3.4"
+  	},
+  	"dependencies": {
+  		"jest": "^29.7.0"
+  	}
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
