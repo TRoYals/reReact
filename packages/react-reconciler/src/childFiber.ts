@@ -25,7 +25,7 @@ function ChildReconciler(shouldTrackEffects: boolean) {
         return fiber;
     }
 
-    function placeSingleChild(fiber:FiberNode){
+    function placeSingleChild(fiber:FiberNode){ //新节点
         if(shouldTrackEffects && fiber.alternate===null){
             fiber.flags |= Placement;
         }

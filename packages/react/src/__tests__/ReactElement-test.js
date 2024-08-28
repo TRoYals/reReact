@@ -156,124 +156,125 @@ describe('ReactElement', () => {
 		expect(element.props.children).toBe(a);
 	});
 
-	// it('does not override children if no rest args are provided', () => {
-	// 	const element = React.createElement(ComponentFC, {
-	// 		children: 'text'
-	// 	});
-	// 	expect(element.props.children).toBe('text');
-	// });
+	it('does not override children if no rest args are provided', () => {
+		const element = React.createElement(ComponentFC, {
+			children: 'text'
+		});
+		expect(element.props.children).toBe('text');
+	});
 
-	// it('overrides children if null is provided as an argument', () => {
-	// 	const element = React.createElement(
-	// 		ComponentFC,
-	// 		{
-	// 			children: 'text'
-	// 		},
-	// 		null
-	// 	);
-	// 	expect(element.props.children).toBe(null);
-	// });
+	it('overrides children if null is provided as an argument', () => {
+		const element = React.createElement(
+			ComponentFC,
+			{
+				children: 'text'
+			},
+			null
+		);
+		expect(element.props.children).toBe(null);
+	});
 
-	// it('merges rest arguments onto the children prop in an array', () => {
-	// 	const a = 1;
-	// 	const b = 2;
-	// 	const c = 3;
-	// 	const element = React.createElement(ComponentFC, null, a, b, c);
-	// 	expect(element.props.children).toEqual([1, 2, 3]);
-	// });
+	it('merges rest arguments onto the children prop in an array', () => {
+		const a = 1;
+		const b = 2;
+		const c = 3;
+		const element = React.createElement(ComponentFC, null, a, b, c);
+        console.log(element);
+		expect(element.props.children).toEqual([1, 2, 3]);
+	});
 
-	// // // NOTE: We're explicitly not using JSX here. This is intended to test
-	// // // classic JS without JSX.
-	// it('allows static methods to be called using the type property', () => {
-	// 	function StaticMethodComponent() {
-	// 		return React.createElement('div');
-	// 	}
-	// 	StaticMethodComponent.someStaticMethod = () => 'someReturnValue';
+	// NOTE: We're explicitly not using JSX here. This is intended to test
+	// classic JS without JSX.
+	it('allows static methods to be called using the type property', () => {
+		function StaticMethodComponent() {
+			return React.createElement('div');
+		}
+		StaticMethodComponent.someStaticMethod = () => 'someReturnValue';
 
-	// 	const element = React.createElement(StaticMethodComponent);
-	// 	expect(element.type.someStaticMethod()).toBe('someReturnValue');
-	// });
+		const element = React.createElement(StaticMethodComponent);
+		expect(element.type.someStaticMethod()).toBe('someReturnValue');
+	});
 
-	// // // NOTE: We're explicitly not using JSX here. This is intended to test
-	// // // classic JS without JSX.
-	// it('identifies valid elements', () => {
-	// 	function Component() {
-	// 		return React.createElement('div');
-	// 	}
+	// NOTE: We're explicitly not using JSX here. This is intended to test
+	// classic JS without JSX.
+	it('identifies valid elements', () => {
+		function Component() {
+			return React.createElement('div');
+		}
 
-	// 	expect(React.isValidElement(React.createElement('div'))).toEqual(true);
-	// 	expect(React.isValidElement(React.createElement(Component))).toEqual(true);
+		expect(React.isValidElement(React.createElement('div'))).toEqual(true);
+		expect(React.isValidElement(React.createElement(Component))).toEqual(true);
 
-	// 	expect(React.isValidElement(null)).toEqual(false);
-	// 	expect(React.isValidElement(true)).toEqual(false);
-	// 	expect(React.isValidElement({})).toEqual(false);
-	// 	expect(React.isValidElement('string')).toEqual(false);
-	// 	expect(React.isValidElement(Component)).toEqual(false);
-	// 	expect(React.isValidElement({ type: 'div', props: {} })).toEqual(false);
+		expect(React.isValidElement(null)).toEqual(false);
+		expect(React.isValidElement(true)).toEqual(false);
+		expect(React.isValidElement({})).toEqual(false);
+		expect(React.isValidElement('string')).toEqual(false);
+		expect(React.isValidElement(Component)).toEqual(false);
+		expect(React.isValidElement({ type: 'div', props: {} })).toEqual(false);
 
-	// 	const jsonElement = JSON.stringify(React.createElement('div'));
-	// 	expect(React.isValidElement(JSON.parse(jsonElement))).toBe(true);
-	// });
+		const jsonElement = JSON.stringify(React.createElement('div'));
+		expect(React.isValidElement(JSON.parse(jsonElement))).toBe(true);
+	});
 
-	// // // NOTE: We're explicitly not using JSX here. This is intended to test
-	// // // classic JS without JSX.
-	// it('is indistinguishable from a plain object', () => {
-	// 	const element = React.createElement('div', { className: 'foo' });
-	// 	const object = {};
-	// 	expect(element.constructor).toBe(object.constructor);
-	// });
+	// NOTE: We're explicitly not using JSX here. This is intended to test
+	// classic JS without JSX.
+	it('is indistinguishable from a plain object', () => {
+		const element = React.createElement('div', { className: 'foo' });
+		const object = {};
+		expect(element.constructor).toBe(object.constructor);
+	});
 
-	// it('does not warn for NaN props', () => {
-	// 	function Test() {
-	// 		return <div />;
-	// 	}
+	it('does not warn for NaN props', () => {
+		function Test() {
+			return <div />;
+		}
 
-	// 	const test = ReactTestUtils.renderIntoDocument(<Test value={+undefined} />);
-	// 	expect(test.props.value).toBeNaN();
-	// });
+		const test = ReactTestUtils.renderIntoDocument(<Test value={+undefined} />);
+		expect(test.props.value).toBeNaN();
+	});
 
-	// // // NOTE: We're explicitly not using JSX here. This is intended to test
-	// // // classic JS without JSX.
-	// it('identifies elements, but not JSON, if Symbols are supported', () => {
-	// 	// Rudimentary polyfill
-	// 	// @eslint-
-	// 	// Once all jest engines support Symbols natively we can swap this to test
-	// 	// WITH native Symbols by default.
-	// 	/*eslint-disable */
-	// 	const REACT_ELEMENT_TYPE = function () {}; // fake Symbol
-	// 	// eslint-disable-line no-use-before-define
-	// 	const OTHER_SYMBOL = function () {}; // another fake Symbol
-	// 	/*eslint-enable */
-	// 	global.Symbol = function (name) {
-	// 		return OTHER_SYMBOL;
-	// 	};
-	// 	global.Symbol.for = function (key) {
-	// 		if (key === 'react.element') {
-	// 			return REACT_ELEMENT_TYPE;
-	// 		}
-	// 		return OTHER_SYMBOL;
-	// 	};
+	// NOTE: We're explicitly not using JSX here. This is intended to test
+	// classic JS without JSX.
+	it('identifies elements, but not JSON, if Symbols are supported', () => {
+		// Rudimentary polyfill
+		// @eslint-
+		// Once all jest engines support Symbols natively we can swap this to test
+		// WITH native Symbols by default.
+		/*eslint-disable */
+		const REACT_ELEMENT_TYPE = function () {}; // fake Symbol
+		// eslint-disable-line no-use-before-define
+		const OTHER_SYMBOL = function () {}; // another fake Symbol
+		/*eslint-enable */
+		global.Symbol = function (name) {
+			return OTHER_SYMBOL;
+		};
+		global.Symbol.for = function (key) {
+			if (key === 'react.element') {
+				return REACT_ELEMENT_TYPE;
+			}
+			return OTHER_SYMBOL;
+		};
 
-	// 	jest.resetModules();
+		jest.resetModules();
 
-	// 	React = require('react');
+		React = require('react');
 
-	// 	function Component() {
-	// 		return React.createElement('div');
-	// 	}
+		function Component() {
+			return React.createElement('div');
+		}
 
-	// 	expect(React.isValidElement(React.createElement('div'))).toEqual(true);
-	// 	expect(React.isValidElement(React.createElement(Component))).toEqual(true);
+		expect(React.isValidElement(React.createElement('div'))).toEqual(true);
+		expect(React.isValidElement(React.createElement(Component))).toEqual(true);
 
-	// 	expect(React.isValidElement(null)).toEqual(false);
-	// 	expect(React.isValidElement(true)).toEqual(false);
-	// 	expect(React.isValidElement({})).toEqual(false);
-	// 	expect(React.isValidElement('string')).toEqual(false);
+		expect(React.isValidElement(null)).toEqual(false);
+		expect(React.isValidElement(true)).toEqual(false);
+		expect(React.isValidElement({})).toEqual(false);
+		expect(React.isValidElement('string')).toEqual(false);
 
-	// 	expect(React.isValidElement(Component)).toEqual(false);
-	// 	expect(React.isValidElement({ type: 'div', props: {} })).toEqual(false);
+		expect(React.isValidElement(Component)).toEqual(false);
+		expect(React.isValidElement({ type: 'div', props: {} })).toEqual(false);
 
-	// 	const jsonElement = JSON.stringify(React.createElement('div'));
-	// 	expect(React.isValidElement(JSON.parse(jsonElement))).toBe(false);
-	// });
+		const jsonElement = JSON.stringify(React.createElement('div'));
+		expect(React.isValidElement(JSON.parse(jsonElement))).toBe(false);
+	});
 });
