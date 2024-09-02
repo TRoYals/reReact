@@ -11,8 +11,8 @@ export class FiberNode {
 	type: any; //React.createElement 的第一个参数
 	tag: WorkTagType;//tag是FiberNode类的一个属性，用来标识这个FiberNode的类型
 	flags: Flags;//标记的是浏览器宿主API的一系列操作
-	subtreeFlags: Flags;
-	deletions: FiberNode[] | null;
+	subtreeFlags: Flags; 
+	deletions: FiberNode[] | null; //父节点的一个数据结构，该数据结构保留了所有该父节点下要删除的节点
 
 	//构成树状结构
 	return: FiberNode | null; //指向父fiberNode

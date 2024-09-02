@@ -1,7 +1,12 @@
 import { appendInitialChild, Container, createInstance ,createTextInstance} from "hostConfig";
 import { FiberNode } from "./fiber";
 import { WorkTag } from "./workTags";
-import { NoFlags } from "./fiberFlags";
+import { NoFlags, Update } from "./fiberFlags";
+
+
+function markUpdate(fiber:FiberNode){
+	fiber.flags |= Update;
+}
 
 export default function completeWork(wip: FiberNode) {
 	//递归同级元素
@@ -11,6 +16,9 @@ export default function completeWork(wip: FiberNode) {
 		case WorkTag.HostComponent:
 			if(current!==null && wip.stateNode){
 				//update
+				//className 
+
+				//text
 			}else{
 				const instance = createInstance(wip.type,newProps);// 浏览器环境中的dom节点
 				appendAllChildren(instance,wip);
@@ -25,6 +33,11 @@ export default function completeWork(wip: FiberNode) {
 		case WorkTag.HostText:
 			if(current!==null && wip.stateNode){
 				//update
+				const oldText =  current.memoizedProps.content;
+				const newText = newProps.content;
+				if(oldText!==newText){
+					markUpdate(wip);
+				}
 			}else{
 				const instance = createTextInstance(newProps.content);
 				wip.stateNode = instance;

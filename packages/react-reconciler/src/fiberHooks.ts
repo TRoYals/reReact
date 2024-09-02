@@ -9,6 +9,7 @@ import { Dispatch,Dispatcher
 
 let currentlyRenderingFiber:FiberNode|null = null;
 let workInProgressHook:Hook|null = null;
+let currentHook: Hook | null = null;
 
 interface Hook{
     memoizedState:any; //和fiber的memoizedState区分一下
@@ -26,6 +27,7 @@ export function renderWithHooks(wip:FiberNode){
     const current = wip.alternate;
     if(current!==null){
         //update
+        currentDisppatcher.current = HooksDispatcherOnUpdate;
 
     }else{
         //mount
@@ -45,6 +47,29 @@ export function renderWithHooks(wip:FiberNode){
 const HooksDispatcherOnMount :Dispatcher={
     useState: mountState,
 } 
+
+const HooksDispatcherOnUpdate :Dispatcher={
+    useState: updateState,
+} 
+
+function updateState<State>(initialState:(State|(()=>State))):[State,Dispatch<State>]{
+    //找到useState对应的hook
+    const hook = updateWorkInProgresHook();
+    let memoizedState;
+    if(initialState instanceof Function){
+        memoizedState = initialState();
+    }else{
+        memoizedState = initialState;
+    }
+    const queue = createUpdateQueue<State>();
+    hook.updateQueue = queue;
+
+    //@ts-ignore
+    const dispatch= dispatchSetState.bind(null,currentlyRenderingFiber,queue);
+    queue.dispatch = dispatch;
+    return [memoizedState,dispatch]
+    
+}
 
 function mountState<State>(initialState:(State|(()=>State))):[State,Dispatch<State>]{
     //找到useState对应的hook
@@ -79,18 +104,41 @@ function mountWorkInProgressHook():Hook{
         updateQueue:null,
         next:null
     }
+   return hook
+}
 
-    if(workInProgressHook === null){
-        if(currentlyRenderingFiber === null){
-            throw new Error("Rendered a hook outside the render phase");
+function updateWorkInProgresHook():Hook{
+    //交互时触发更新
+    //<div onClick = {()=>{update}}> </div>
+    let nextCurrentHook :Hook|null;
+    if(currentHook===null){
+        const current = currentlyRenderingFiber?.alternate; 
+        if(current!==null){
+            nextCurrentHook = current?.memoizedState;
         }else{
-            workInProgressHook = hook;
-            currentlyRenderingFiber.memoizedState = workInProgressHook;
+            nextCurrentHook = null;
         }
     }else{
-        workInProgressHook.next = hook;
-        workInProgressHook = hook;
+        nextCurrentHook = currentHook.next;
     }
-    return workInProgressHook;
-   
+    currentHook  = nextCurrentHook as Hook;
+    const newHook : Hook = {
+        memoizedState : currentHook.memoizedState,
+        updateQueue : currentHook.updateQueue,
+        next:null
+    }
+    if(workInProgressHook === null){
+        if(currentlyRenderingFiber === null){
+            throw new Error("请在函数组件内调用hook")
+        }else{
+            workInProgressHook = newHook; 
+        }
+    }
+
+    //TODO:render时触发更新
+    // function App(){
+    //     const [num,setNum] = useState(1);
+    //     setNum(100)
+    // }
+
 }
